@@ -1,8 +1,9 @@
 var UI = (function() {
-  function createList(items) {
+  function createList(id, items) {
     var ul = $(document.createElement("ul"));
+    ul.attr("id", id);
     for(var i = 0; i < items.length; i++) {
-      ul.append($(document.createElement("li")).text(items[i]));
+      ul.append($(document.createElement("li")).attr("id", id + "_" + i).text(items[i]));
     }
     return ul;
   }
