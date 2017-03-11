@@ -1,9 +1,15 @@
 var UI = (function() {
+  function createList(items) {
+    var ul = $(document.createElement("ul"));
+    for(var i = 0; i < items.length; i++) {
+      ul.append($(document.createElement("li")).text(items[i]));
+    }
+    return ul;
+  }
   function createTable(id, numRows, numColumns) {
     var table = $(document.createElement("table"));
     table.attr("id", id);
     table.attr("role", "grid");
-    table.attr("border", "1");
     for(var i = 0; i < numRows; i++) {
       table.append(createRow(numColumns));
     }
@@ -20,6 +26,7 @@ var UI = (function() {
   }
 
   return {
+    createList: createList,
     createTable: createTable
   };
 })();

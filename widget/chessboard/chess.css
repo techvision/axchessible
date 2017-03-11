@@ -2,17 +2,61 @@
 width: 100%;
 height: auto;
 }
-.centerBoard {
+.boardWrapper {
 margin-left: auto;
 margin-right: auto;
-width: 600px;
-height: 600px;
+width: 560px;
+height: 560px;
+display: flex;
+}
+.upperSection {
+flex: 1;
+display: flex;
+width: 100%;
+}
+.lowerSection {
+clear: left;
+display: flex;
+width: 100%;
+height: 5em;
+}
+.leftLabelSpace {
+width: 5em;
+height: 100%;
+}
+.rankLabels {
+list-style-type: none;
+}
+.rankLabels li {
+text-align: center;
+vertical-align: middle;
+font-weight: bold;
+height: 12.5%;
+}
+.fileLabels {
+list-style-type: none;
+flex: 1;
+}
+.fileLabels li {
+float: left;
+text-align: center;
+vertical-align: middle;
+font-weight: bold;
+width: 12.5%;
+}
+.board {
 table-layout: fixed;
-table-collapse: collapse;
+border: 1px solid black;
+border-collapse: collapse;
+border-spacing: 0px;
+height: 100%;
+width: 100%;
 }
 .boardSquare {
 width: 12.5%;
 height: 12.5%;
+box-sizing: border-box;
+border: 0px;
 }
 .blackSquare {
 background-color: #000000;
