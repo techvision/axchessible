@@ -1,0 +1,22 @@
+#main {
+width: 100%;
+height: auto;
+}
+.centerBoard {
+margin-left: auto;
+margin-right: auto;
+width: 600px;
+height: 600px;
+table-layout: fixed;
+table-collapse: collapse;
+}
+.boardSquare {
+width: 12.5%;
+height: 12.5%;
+}
+.blackSquare {
+background-color: #000000;
+}
+.whiteSquare {
+background-color: #ffffff;
+}
