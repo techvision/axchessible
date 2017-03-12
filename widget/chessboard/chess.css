@@ -21,7 +21,6 @@
 table.board tr td {
   border: 1px solid black;
 }
-
 table.board tr:nth-of-type(odd) td:nth-of-type(odd),
 table.board tr:nth-of-type(even) td:nth-of-type(even) {
   background-color: white;
@@ -32,5 +31,5 @@ table.board tr:nth-of-type(odd) td:nth-of-type(even) {
 }
 
 .active {
-  border: 1px solid #ff0000;
+  border: 3px solid #ff0000 !important;
 }
