@@ -64,3 +64,6 @@ background-color: #000000;
 .whiteSquare {
 background-color: #ffffff;
 }
+.active {
+border: 1px solid #ff0000;
+}

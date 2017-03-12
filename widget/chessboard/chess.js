@@ -33,7 +33,7 @@ function Chess(container) {
       squares.each(function(index) {
         var fileLabel = $(fileLabels.find("li").get(index));
         $(this).addClass("boardSquare");
-        $(this).attr("arria-labelledby", fileLabel.attr("id") + " " + rankLabel.attr("id"));
+        $(this).attr("aria-labelledby", fileLabel.attr("id") + " " + rankLabel.attr("id"));
         if(rowIndex % 2 == 0) {
           if(index % 2 == 0) $(this).addClass("whiteSquare");
           else $(this).addClass("blackSquare");
@@ -54,6 +54,12 @@ function Chess(container) {
       break;
       case keys.right:
         navigateRight();
+      break;
+      case keys.up:
+        navigateUp();
+      break;
+      case keys.down:
+        navigateDown();
       break;
       default:
     }
@@ -85,10 +91,33 @@ function Chess(container) {
       setActive(nextSquare);
     }
   }
+
+  function navigateUp() {
+    var currentSquare = getCurrentSquare();
+    var currentRow = currentSquare.parent();
+    if(currentRow.index() > 0) {
+      var previousRow = $(currentRow.parent().find("tr").get(currentRow.index() - 1));
+      var previousSquare = $(previousRow.find("td").get(currentSquare.index()));
+      setActive(previousSquare);
+    }
+  }
+
+  function navigateDown() {
+    var currentSquare = getCurrentSquare();
+    var currentRow = currentSquare.parent();
+    if(currentRow.index() < 7) {
+      var nextRow = $(currentRow.parent().find("tr").get(currentRow.index() + 1));
+      var nextSquare = $(nextRow.find("td").get(currentSquare.index()));
+      setActive(nextSquare);
+    }
+  }
+
   function getCurrentSquare() {
     return $("#" + board.attr("aria-activedescendant"));
   }
   function setActive(square) {
+    getCurrentSquare().removeClass("active");
+    square.addClass("active");
     board.attr("aria-activedescendant", square.attr("id"));
   }
 }
