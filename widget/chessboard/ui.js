@@ -12,16 +12,16 @@ var UI = (function() {
     table.attr("id", id);
     table.attr("role", "grid");
     for(var i = 0; i < numRows; i++) {
-      table.append(createRow(numColumns));
+      table.append(createRow(id, i, numColumns));
     }
     return table;
   }
 
-  function createRow(numColumns) {
+  function createRow(id, rowIndex, numColumns) {
     var tr = $(document.createElement("tr"));
     tr.attr("role", "row");
     for(var i = 0; i < numColumns; i++) {
-      tr.append($(document.createElement("td")).attr("role", "gridcell"));
+      tr.append($(document.createElement("td")).attr("id", id + rowIndex + "_" + i).attr("role", "gridcell"));
     }
     return tr;
   }
