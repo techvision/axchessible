@@ -1,11 +1,19 @@
 var UI = (function() {
-  function createList(id, items) {
-    var ul = $(document.createElement("ul"));
-    ul.attr("id", id);
+
+  function createHeaderRow(id, items) {
+    var tr = $(document.createElement("tr"));
+    tr.attr("id", id);
     for(var i = 0; i < items.length; i++) {
-      ul.append($(document.createElement("li")).attr("id", id + "_" + i).text(items[i]));
+      tr.append(createHeaderCell(id + "_" + i, items[i]));
     }
-    return ul;
+    return tr;
+
+  }
+  function createHeaderCell(id, value) {
+    var th = $(document.createElement("th"));
+    th.attr("id", id);
+    th.text(value);
+    return th;
   }
   function createTable(id, numRows, numColumns) {
     var table = $(document.createElement("table"));
@@ -27,7 +35,8 @@ var UI = (function() {
   }
 
   return {
-    createList: createList,
+    createHeaderRow: createHeaderRow,
+    createHeaderCell: createHeaderCell,
     createTable: createTable
   };
 })();

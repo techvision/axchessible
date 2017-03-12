@@ -10,41 +10,42 @@ space: 32
 function Chess(container) {
   var board = UI.createTable("chessBoard", 8, 8).addClass("board").addClass("rightBoardSpace");
   board.attr("tabindex", "0");
-  var rankLabels = UI.createList("rank", ["8", "7", "6", "5", "4", "3", "2", "1"]).addClass("rankLabels").addClass("leftLabelSpace");
-  var upperSection = $(document.createElement("div")).addClass("upperSection");
-  upperSection.append(rankLabels).append(board);
-  var lowerSection = $(document.createElement("div")).addClass("lowerSection");
-  var emptyLeftSpace = $(document.createElement("div")).addClass("leftLabelSpace");
-  lowerSection.append(emptyLeftSpace);
-  var fileLabels = UI.createList("file", ["a", "b", "c", "d", "e", "f", "g", "h"]).addClass("fileLabels").addClass("rightBoardSpace");
-  lowerSection.append(fileLabels);
   var boardWrapper = $(document.createElement("div")).addClass("boardWrapper");
-  boardWrapper.append(upperSection);
-  boardWrapper.append(lowerSection);
+  boardWrapper.append(board);
   $("#" + container).append(boardWrapper);
+  addRankLabels();
+  addFileLabels();
   formatChessBoard();
   bindHandlers();
 
   function formatChessBoard() {
     var ranks = board.find("tr");
+    var fileLabels = $("#file").find("th");
     ranks.each(function(rowIndex) {
-      var squares = $(this).find("td");
-      var rankLabel = $(rankLabels.find("li").get(rowIndex));
-      squares.each(function(index) {
-        var fileLabel = $(fileLabels.find("li").get(index));
-        $(this).addClass("boardSquare");
-        $(this).attr("aria-labelledby", fileLabel.attr("id") + " " + rankLabel.attr("id"));
-        if(rowIndex % 2 == 0) {
-          if(index % 2 == 0) $(this).addClass("whiteSquare");
-          else $(this).addClass("blackSquare");
-        } else {
-          if(index % 2 == 0) $(this).addClass("blackSquare");
-          else $(this).addClass("whiteSquare");
-        }
-      });
+      if(rowIndex < 8) {
+        var squares = $(this).find("td");
+        var rankLabel = $(this).find("th").first();
+        squares.each(function(index) {
+          var fileLabel = $(fileLabels.get(index + 1));
+          $(this).attr("aria-labelledby", fileLabel.attr("id") + " " + rankLabel.attr("id"));
+        });
+      }
     });
+  }
 
 
+  function addFileLabels() {
+    board.append(UI.createHeaderRow("file", ["", "a", "b", "c", "d", "e", "f", "g", "h"]));
+  }
+
+  function addRankLabels() {
+    var ranks = board.find("tr");
+    var rankNumber = 8;
+    ranks.each(function(rowIndex) {
+      var rankCell = UI.createHeaderCell("rank_" + rowIndex, rankNumber);
+      rankNumber--;
+      $(this).prepend(rankCell);
+    });
   }
 
   function handleKeyDown(e) {
@@ -65,9 +66,11 @@ function Chess(container) {
     }
   }
   function handleFocus(e) {
-    var firstRow = $(board.find("tr").get(0));
-    var firstCell = $(firstRow.find("td").get(0));
-    setActive(firstCell);
+    if(getCurrentSquare() === null) {
+      var firstRow = $(board.find("tr").get(0));
+      var firstCell = $(firstRow.find("td").get(0));
+      setActive(firstCell);
+    }
   }
   function bindHandlers() {
     board.focus(handleFocus);
@@ -77,8 +80,8 @@ function Chess(container) {
   function navigateLeft() {
     var currentSquare = getCurrentSquare();
     var currentRow = currentSquare.parent();
-    if(currentSquare.index() > 0) {
-      var previousSquare = $(currentRow.find("td").get(currentSquare.index() - 1));
+    if(currentSquare.index() > 1) {
+      var previousSquare = $(currentRow.children().get(currentSquare.index() - 1));
       setActive(previousSquare);
     }
   }
@@ -86,8 +89,8 @@ function Chess(container) {
   function navigateRight() {
     var currentSquare = getCurrentSquare();
     var currentRow = currentSquare.parent();
-    if(currentSquare.index() < 7) {
-      var nextSquare = $(currentRow.find("td").get(currentSquare.index() + 1));
+    if(currentSquare.index() < 8) {
+      var nextSquare = $(currentRow.children().get(currentSquare.index() + 1));
       setActive(nextSquare);
     }
   }
@@ -97,7 +100,7 @@ function Chess(container) {
     var currentRow = currentSquare.parent();
     if(currentRow.index() > 0) {
       var previousRow = $(currentRow.parent().find("tr").get(currentRow.index() - 1));
-      var previousSquare = $(previousRow.find("td").get(currentSquare.index()));
+      var previousSquare = $(previousRow.children().get(currentSquare.index()));
       setActive(previousSquare);
     }
   }
@@ -107,16 +110,17 @@ function Chess(container) {
     var currentRow = currentSquare.parent();
     if(currentRow.index() < 7) {
       var nextRow = $(currentRow.parent().find("tr").get(currentRow.index() + 1));
-      var nextSquare = $(nextRow.find("td").get(currentSquare.index()));
+      var nextSquare = $(nextRow.children().get(currentSquare.index()));
       setActive(nextSquare);
     }
   }
 
   function getCurrentSquare() {
-    return $("#" + board.attr("aria-activedescendant"));
+    return (board.attr("aria-activedescendant") === undefined) ? null: $("#" + board.attr("aria-activedescendant"));
   }
   function setActive(square) {
-    getCurrentSquare().removeClass("active");
+    var currentSquare = getCurrentSquare();
+    if(currentSquare != null) currentSquare.removeClass("active");
     square.addClass("active");
     board.attr("aria-activedescendant", square.attr("id"));
   }
