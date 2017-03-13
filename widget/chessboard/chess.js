@@ -16,6 +16,7 @@ function Chess(container) {
   addRankLabels();
   addFileLabels();
   formatChessBoard();
+  board.find("th").attr("aria-hidden", "true");
   bindHandlers();
 
   function formatChessBoard() {
