@@ -2,7 +2,6 @@
 Accessible Chess online for blind
 
 ##Resources
-
 * [Unicode symbols for chess pieces](https://en.wikipedia.org/wiki/Chess_symbols_in_Unicode)
 * [Algebraic Notation](https://en.wikipedia.org/wiki/Algebraic_notation_(chess))
 * [FEN (Forsyth–Edwards Notation)](https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation)
@@ -11,5 +10,4 @@ Accessible Chess online for blind
 
 ##Vote Of Thanks
 Thanks to all those who answerred all queries.
-
 * Thanks to Pol who guided when we were [facing issue with display:flex](http://stackoverflow.com/questions/42747624/facing-issue-with-displayflex-should-i-use-float-instead)
