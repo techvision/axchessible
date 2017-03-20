@@ -3,10 +3,36 @@
 <head>
   <title>Chess Board</title>
   <meta charset="UTF-8">
+  <script type="text/javascript">
+    /*Prevent console.* methods to not fail in browsers which don't support its methods*/
+    (function() {
+        var method;
+        var noop = function () {};
+        var methods = [
+            'assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error',
+            'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log',
+            'markTimeline', 'profile', 'profileEnd', 'table', 'time', 'timeEnd',
+            'timeStamp', 'trace', 'warn'
+        ];
+        var length = methods.length;
+        var console = (window.console = window.console || {});
+
+            while (length--) {
+                method = methods[length];
+
+            // Only stub undefined methods.
+            if (!console[method]) {
+                console[method] = noop;
+            }
+        }
+    }());
+  </script>
   <link rel="stylesheet" href="chess.css" />
   <script type="text/javascript" src="jquery-1.9.1.min.js"></script>
   <script type="text/javascript" src="ui.js"></script>
   <script type="text/javascript" src="chess.js"></script>
+  <script type="text/javascript" src="main.js"></script>
+  <script type="text/javascript" src="defs.js"></script>
   <script type="text/javascript" >
     $(document).ready(function() {
       var chessBoard = new Chess("main");
@@ -16,5 +42,8 @@
 <body>
   <h1>Chess Board</h1>
   <div id="main"></div>
+  <h1>Chess Engine</h1>
+  <input type="text" name="inputText" id="inputText" />
+  <input type="button" name="btn1" id="btn1" value="Ok" />
 </body>
 </html>

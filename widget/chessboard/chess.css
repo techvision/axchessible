@@ -3,13 +3,18 @@
   height: auto;
 }
 
-.boardWrapper {
-  margin-left: auto;
-  margin-right: auto;
+#boardMain {
+  margin: auto;
+  width: 580px;
+}
+
+#boardMain .boardWrapper {
   width: 560px;
   height: 560px;
+  float: left;
 }
-.board {
+
+#boardMain .board {
   table-layout: fixed;
   border: none;
   border-collapse: collapse;
@@ -28,6 +33,42 @@ table.board tr:nth-of-type(even) td:nth-of-type(even) {
 table.board tr:nth-of-type(even) td:nth-of-type(odd),
 table.board tr:nth-of-type(odd) td:nth-of-type(even) {
   background-color: black;
+}
+
+#boardMain p {
+  margin: 0;
+  font-weight: bold;
+}
+
+#boardMain .leftside {
+  width: calc(100% - 560px); /* #main - table.board */
+  height: 560px; /* size of .board*/
+  float: left;
+}
+
+
+#boardMain .leftside p {
+  height: 12.5%;
+  display: table;
+}
+
+#boardMain .leftside p span {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+#boardMain .bottompart p {
+  margin-top: 5px;
+  width: 12.5%;
+  float: left;
+  text-align: center;
+}
+
+#boardMain .bottompart {
+  clear: both;
+  height: 20px;
+  margin-left: auto;
+  width: 560px;
 }
 
 .active {

@@ -7,13 +7,23 @@ var UI = (function() {
       tr.append(createHeaderCell(id + "_" + i, items[i]));
     }
     return tr;
-
   }
+
   function createHeaderCell(id, value) {
     var th = $(document.createElement("th"));
     th.attr("id", id);
     th.text(value);
     return th;
+  }
+
+  function createNonStyledItems(id, items) {
+    var columnDiv = $(document.createElement("div")).attr("id", id);
+    for(var i = 0; i < items.length; i++) {
+      var p = $(document.createElement("p")).attr("id", id + "_" + i);
+      p.append($(document.createElement("span")).text(items[i]));
+      columnDiv.append(p);
+    }
+    return columnDiv;
   }
   function createTable(id, numRows, numColumns) {
     var table = $(document.createElement("table"));
@@ -37,6 +47,7 @@ var UI = (function() {
   return {
     createHeaderRow: createHeaderRow,
     createHeaderCell: createHeaderCell,
+    createNonStyledItems: createNonStyledItems,
     createTable: createTable
   };
 })();

@@ -12,40 +12,31 @@ function Chess(container) {
   board.attr("tabindex", "0");
   var boardWrapper = $(document.createElement("div")).addClass("boardWrapper");
   boardWrapper.append(board);
-  $("#" + container).append(boardWrapper);
-  addRankLabels();
-  addFileLabels();
+  var boardMain = $(document.createElement("div")).attr("id", "boardMain");
+  var leftSide = UI.createNonStyledItems("rank",
+    ["8", "7", "6", "5", "4", "3", "2", "1"]
+  ).addClass("leftside");
+    var bottomPart = UI.createNonStyledItems("file",
+    ["a", "b", "c", "d", "e", "f", "g", "h"]
+  ).addClass("bottompart");
+  boardMain.append(leftSide).append(boardWrapper).append(bottomPart);
+  $("#" + container).append(boardMain);
   formatChessBoard();
-  board.find("th").attr("aria-hidden", "true");
   bindHandlers();
 
   function formatChessBoard() {
     var ranks = board.find("tr");
-    var fileLabels = $("#file").find("th");
+    var fileLabels = $("#file").find("p");
+    var rankLabels = $("#rank").find("p");
     ranks.each(function(rowIndex) {
       if(rowIndex < 8) {
         var squares = $(this).find("td");
-        var rankLabel = $(this).find("th").first();
+        var rankLabel = $(rankLabels.get(rowIndex));
         squares.each(function(index) {
-          var fileLabel = $(fileLabels.get(index + 1));
+          var fileLabel = $(fileLabels.get(index));
           $(this).attr("aria-labelledby", fileLabel.attr("id") + " " + rankLabel.attr("id"));
         });
       }
-    });
-  }
-
-
-  function addFileLabels() {
-    board.append(UI.createHeaderRow("file", ["", "a", "b", "c", "d", "e", "f", "g", "h"]));
-  }
-
-  function addRankLabels() {
-    var ranks = board.find("tr");
-    var rankNumber = 8;
-    ranks.each(function(rowIndex) {
-      var rankCell = UI.createHeaderCell("rank_" + rowIndex, rankNumber);
-      rankNumber--;
-      $(this).prepend(rankCell);
     });
   }
 
@@ -81,7 +72,7 @@ function Chess(container) {
   function navigateLeft() {
     var currentSquare = getCurrentSquare();
     var currentRow = currentSquare.parent();
-    if(currentSquare.index() > 1) {
+    if(currentSquare.index() > 0) {
       var previousSquare = $(currentRow.children().get(currentSquare.index() - 1));
       setActive(previousSquare);
     }
